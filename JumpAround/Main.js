@@ -11,10 +11,13 @@ function main()
     document.body.appendChild(app.canvas);
     app.canvas.width = window.innerWidth;
     app.canvas.height = window.innerHeight;
+    
 
     app.ctx = app.canvas.getContext("2d");
 
-	app.game = new Game();
+    app.gameObjects = new GameObjects();
+    app.backGround = new BackGround();
+   	app.game = new Game();
 	app.player = new Player();
 	app.goal = new Goal();
 	app.game.Init();

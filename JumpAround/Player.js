@@ -14,7 +14,8 @@ function Player()
 	this.distance =0;
 	this.velocityX = 0;
 	this.jumping = false;
-	this.velocityY=0;
+	this.jump = false;
+	this.velocityY=12;
 	this.dt = 0.0001;
 	this.playerSprite = new Image();
 	this.direction =0;
@@ -28,7 +29,8 @@ Player.prototype.Draw = function() {
 		app.ctx = app.canvas.getContext("2d");
 		this.playerSprite.src = 'Images/Running.png';
 		app.ctx.drawImage(this.playerSprite,this.rightAnimation,this.direction,this.width/6,this.height/2,this.x,this.y,this.playerWidth,this.playerheight);
-
+		
+		
 	}
 };
 
@@ -40,18 +42,20 @@ function keyDownHandler(e)
 
 	if(e.keyCode === 38) //up arrow 
 	{
-		if(app.player.alive === true&&app.player.jumping ==false)
-		{
-			app.player.y += -20;			
 
+		if(app.player.alive === true&&app.player.jumping ==true)
+		{
+				
+			app.player.jump = true;
 		}
 	}
+
 
 	if(e.keyCode === 37) //left arrow 
 	{
 		if(app.player.alive=== true)
 		{
-			app.player.x -= 3;
+			app.player.x -= 6;
 			app.player.direction =807;
 			app.player.spriteAnimation++;
 		}
@@ -71,19 +75,20 @@ function keyDownHandler(e)
 		if(app.player.alive=== true)
 		{
 			app.player.direction =0;
-			app.player.x +=3;
+			app.player.x +=6;
 			app.player.spriteAnimation++; 
 		}
 	}
 	app.ctx.clearRect(0, 0, 1920, 1080 );
+
 }
 
 
 Player.prototype.CheckCollision = function(e)
 {
 	if((this.x < e.x1 + e.width) && 
-		(this.x + this.playerWidth > e.x1) && 
-		(this.y + this.playerHeight > e.y1) && 
+		(this.x + this.width/24 > e.x1) && 
+		(this.y + this.height/10 > e.y1) && 
 		(this.y < e.y1 + e.height))
 	{
 		e.x1 = -100;
@@ -91,8 +96,8 @@ Player.prototype.CheckCollision = function(e)
 		this.stars++;
 	}
 	if((this.x < e.x2 + e.width) && 
-		(this.x + this.playerWidth > e.x2) && 
-		(this.y + this.playerHeight > e.y2) && 
+		(this.x + this.width/24 > e.x2) && 
+		(this.y + this.height/10 > e.y2) && 
 		(this.y < e.y2 + e.height))
 	{
 		e.x2 = -100;
@@ -100,15 +105,15 @@ Player.prototype.CheckCollision = function(e)
 		this.stars++;
 	}
 	if((this.x < e.x3 + e.width) && 
-		(this.x + this.playerWidth > e.x3) && 
-		(this.y + this.playerHeight > e.y3) && 
+		(this.x + this.width/24 > e.x3) && 
+		(this.y + this.height/10 > e.y3) && 
 		(this.y < e.y3 + e.height))
 	{
 		e.x3 = -100;
 		e.y3 = -100;
 		this.stars++;
 	}
-	if(this.stars == 3)
+		if(this.stars == 3)
 	{
 		app.player.Collided(e);
 		this.alive = false;
@@ -120,8 +125,103 @@ Player.prototype.CheckCollision = function(e)
 		app.goal.Reset();
 		this.delay = 0; 
 	}
-	 console.log(e.x);
 };
+Player.prototype.JumpingDetection = function(e)
+{
+	if((this.x < e.floorX + e.floorWidth) && 
+			(this.x + this.width/24 > e.floorX) && 
+			(this.y + this.height/10 > e.floorY+80) && 
+			(this.y < e.floorY + e.floorHeight))
+		{
+			this.jumping = true;
+		}
+	else if((this.x < e.platformPosX1 + e.platformWidth) && 
+			(this.x + this.width/24 > e.platformPosX1) && 
+			(this.y + this.height/10 > e.platformPosY1-35) && 
+			(this.y < e.platformPosY1 + e.platformHeight-100))
+		{
+			this.jumping = true;
+		}	
+	else if((this.x < e.platformPosX2 + e.platformWidth) && 
+			(this.x + this.width/24 > e.platformPosX2) && 
+			(this.y + this.height/10 > e.platformPosY2-35) && 
+			(this.y < e.platformPosY2 + e.platformHeight-100))
+		{
+			this.jumping = true;
+		}
+	else if((this.x < e.platformPosX3 + e.platformWidth) && 
+			(this.x + this.width/24 > e.platformPosX3) && 
+			(this.y + this.height/10 > e.platformPosY3-35) && 
+			(this.y < e.platformPosY3 + e.platformHeight-100))
+		{
+			this.jumping = true;
+		}
+		else
+		{
+			this.jumping = false;
+		}
+
+
+		console.log(this.jumping)
+	
+}
+Player.prototype.Jump = function(e)
+{	
+
+	if(this.jump)
+	{
+		this.velocityY -=0.1;
+		this.y -= this.velocityY;
+	}
+		//if(this.y >= 700)
+		//{
+		//	this.jump = false;
+		//	this.velocityY = 10;
+		//}
+		if((this.x < e.platformPosX1 + e.platformWidth)&&(this.x + this.width/24 > e.platformPosX1)&&(this.y + this.height/10 > e.platformPosY1-30) && (this.y < e.platformPosY1 + e.platformHeight))
+		{
+			this.jump = false;
+			this.velocityY = 10;
+			//if(this.jumping == false)
+			//{
+			//	this.velocityY -=0.1;
+			//}	
+		} 
+		if((this.x < e.platformPosX2 + e.platformWidth)&&(this.x + this.width/24 > e.platformPosX2)&&(this.y + this.height/10 > e.platformPosY2-30) && (this.y < e.platformPosY2 + e.platformHeight))
+		{
+			this.jump = false;
+			this.velocityY = 10;
+			if(this.jumping == false)
+			{
+				this.velocityY -=0.1;
+			}	
+		} 
+		if((this.x < e.platformPosX3 + e.platformWidth)&&(this.x + this.width/24 > e.platformPosX3)&&(this.y + this.height/10 > e.platformPosY3-30) && (this.y < e.platformPosY3 + e.platformHeight))
+		{
+			this.jump = false;
+			this.velocityY = 10;
+
+			if (this.x<990) 
+			{
+				this.x -=2;
+				//this.y +=5;
+			}
+			
+		} 
+	if(this.jump == false && this.jumping == false)//Fall off Ledges
+	{
+		this.y +=7;
+	}
+		
+
+		console.log(this.x);
+		console.log(this.y);
+		
+			//velocityY = 0;
+		
+}
+
+
 Player.prototype.Collided = function(e)
 {
 	e.alive = false; 
@@ -135,6 +235,7 @@ Player.prototype.Collided = function(e)
 
 Player.prototype.Reset = function()
 {
+
 	this.x = Math.random() * window.innerWidth;
 	this.y = Math.random() * window.innerHeight;
 	this.alive = true;

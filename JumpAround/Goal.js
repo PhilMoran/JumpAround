@@ -1,11 +1,11 @@
 function Goal()
 {
-	this.x1 = 1000;
-	this.y1 = 500;
-	this.x2 = 600;
-	this.y2 = 500;
+	this.x1 = 1300;
+	this.y1 = 300;
+	this.x2 = 700;
+	this.y2 = 50;
 	this.x3 = 80;
-	this.y3 =500;
+	this.y3 =400;
 	this.sourceWidth = 128; 
 	this.sourceHeight = 128; 
 	this.width =64;

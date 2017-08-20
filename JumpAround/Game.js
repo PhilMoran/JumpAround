@@ -16,6 +16,9 @@ Game.prototype.Update = function()
 	app.gameObjects.Draw();
 	app.goal.Draw();
 	app.goal.Animate();
+	//app.player.Jump();
 	app.player.CheckCollision(app.goal);
+	app.player.JumpingDetection(app.gameObjects);
+	app.player.Jump(app.gameObjects);
 	window.requestAnimationFrame(app.game.Update);
 }

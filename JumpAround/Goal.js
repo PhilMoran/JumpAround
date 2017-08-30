@@ -16,6 +16,7 @@ function Goal()
     this.tickCount = 0;
     this.sprite = 0;
     this.ticksPerFrame = this.ticksPerFrame || 0;
+    
 
 
 };

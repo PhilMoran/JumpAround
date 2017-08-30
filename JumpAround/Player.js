@@ -21,6 +21,7 @@ function Player()
 	this.direction =0;
 	this.spriteAnimation = 0;
 	this.rightAnimation =0;
+	this.collectSound = new Audio();
 };
 
 Player.prototype.Draw = function() {
@@ -33,7 +34,6 @@ Player.prototype.Draw = function() {
 		
 	}
 };
-
 function keyDownHandler(e)
 {
 	console.log(app.player.y);
@@ -82,10 +82,65 @@ function keyDownHandler(e)
 	app.ctx.clearRect(0, 0, 1920, 1080 );
 
 }
+function touchDownHandler(e)
+{
+	console.log(app.player.y);
+	e.preventDefault();
 
+	app.player.velocityX = (app.player.x/app.player.distance)*app.player.speed;
+
+	if(e.keyCode === 38) //up arrow 
+	{
+
+		if(app.player.alive === true&&app.player.jumping ==true)
+		{
+				
+			app.player.jump = true;
+		}
+	}
+
+
+	if(e.touches[0].clientX <= window.innerWidth /2) //left arrow 
+	{
+		if(app.player.alive=== true)
+		{
+			app.player.x -= 6;
+			app.player.direction =807;
+			app.player.spriteAnimation++;
+		}
+	}
+
+	if(e.touches[0].clientX >= window.innerWidth /2 ) // right arrow 
+	{
+		if(app.player.alive=== true)
+		{
+			app.player.direction =0;
+			app.player.x +=6;
+			app.player.spriteAnimation++; 
+		}
+	}
+
+	if(app.player.spriteAnimation >= 5)
+	{
+		app.player.spriteAnimation =0;
+		app.player.rightAnimation +=489;
+	}
+	if(app.player.rightAnimation >= 2934)
+	{
+		app.player.rightAnimation =0;
+	}
+
+	
+	app.ctx.clearRect(0, 0, 1920, 1080 );
+
+}
 
 Player.prototype.CheckCollision = function(e)
 {
+	this.collectSound.src ='sound.mp3';
+
+	//console.log((new Audio()).canPlayType("audio/ogg; codecs=vorbis"));
+
 	if((this.x < e.x1 + e.width) && 
 		(this.x + this.width/24 > e.x1) && 
 		(this.y + this.height/10 > e.y1) && 
@@ -94,6 +149,7 @@ Player.prototype.CheckCollision = function(e)
 		e.x1 = -100;
 		e.y1 = -100;
 		this.stars++;
+		this.collectSound.play();
 	}
 	if((this.x < e.x2 + e.width) && 
 		(this.x + this.width/24 > e.x2) && 
@@ -103,6 +159,7 @@ Player.prototype.CheckCollision = function(e)
 		e.x2 = -100;
 		e.y2 = -100;
 		this.stars++;
+		this.collectSound.play();
 	}
 	if((this.x < e.x3 + e.width) && 
 		(this.x + this.width/24 > e.x3) && 
@@ -112,6 +169,7 @@ Player.prototype.CheckCollision = function(e)
 		e.x3 = -100;
 		e.y3 = -100;
 		this.stars++;
+		this.collectSound.play();
 	}
 		if(this.stars == 3)
 	{

@@ -5,6 +5,12 @@ function main()
 {
     //Setting values to the variables initalized 
 	document.addEventListener("keydown", keyDownHandler);	
+	//.addEventListener("mouseup", tapOrClick, false);
+	//document.addEventListener("touchend", tapOrClick, false);
+	document.addEventListener("touchstart", menuTapControls, false);
+	document.addEventListener("touchstart", touchDownHandler, false);
+	//document.addEventListener("touchend", tapOrClick, false);
+
 	 //Creates a new canvas element 
     app.canvas = document.createElement("canvas");
     //Adds the canvas element to the document 
@@ -18,6 +24,7 @@ function main()
     app.gameObjects = new GameObjects();
     app.backGround = new BackGround();
    	app.game = new Game();
+   	app.menu = new MainMenu();
 	app.player = new Player();
 	app.goal = new Goal();
 	app.game.Init();

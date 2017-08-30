@@ -8,8 +8,9 @@ function main()
 	//.addEventListener("mouseup", tapOrClick, false);
 	//document.addEventListener("touchend", tapOrClick, false);
 	document.addEventListener("touchstart", menuTapControls, false);
+	document.addEventListener('touchmove', touchDownHandler, false);
 	document.addEventListener("touchstart", touchDownHandler, false);
-	//document.addEventListener("touchend", tapOrClick, false);
+	//document.addEventListener("touchend", touchDownHandler, false);
 
 	 //Creates a new canvas element 
     app.canvas = document.createElement("canvas");

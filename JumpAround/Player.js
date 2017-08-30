@@ -22,6 +22,9 @@ function Player()
 	this.spriteAnimation = 0;
 	this.rightAnimation =0;
 	this.collectSound = new Audio();
+	this.previousX =0;
+	this.previousY =0;
+
 };
 
 Player.prototype.Draw = function() {
@@ -87,38 +90,59 @@ function touchDownHandler(e)
 	console.log(app.player.y);
 	e.preventDefault();
 
+	 
+
 	app.player.velocityX = (app.player.x/app.player.distance)*app.player.speed;
 
-	if(e.keyCode === 38) //up arrow 
+	
+	if(e.touches[0].clientY <= window.innerHeight/4) //left arrow 
 	{
-
-		if(app.player.alive === true&&app.player.jumping ==true)
+	
+		 if(app.player.alive === true&&app.player.jumping ==true)
 		{
 				
 			app.player.jump = true;
-		}
+		}    
 	}
+	///app.player.previousY = e.touches[0].clientY; 
+	
 
-
-	if(e.touches[0].clientX <= window.innerWidth /2) //left arrow 
+	if(e.touches[0].clientX <= app.player.previousX) //left arrow 
 	{
 		if(app.player.alive=== true)
 		{
-			app.player.x -= 6;
+			if(app.player.jump ==true)
+			{
+			app.player.x -= 2;
+			}
+			else
+			{
+				app.player.x-=4;
+			}
 			app.player.direction =807;
 			app.player.spriteAnimation++;
 		}
 	}
-
-	if(e.touches[0].clientX >= window.innerWidth /2 ) // right arrow 
+	
+	if(e.touches[0].clientX >= app.player.previousX ) // right arrow 
 	{
 		if(app.player.alive=== true)
 		{
+			if(app.player.jump ==true)
+			{
+				app.player.x += 2;
+			}
+			else
+			{
+				app.player.x +=4;
+			}
 			app.player.direction =0;
-			app.player.x +=6;
+
 			app.player.spriteAnimation++; 
 		}
 	}
+
+	app.player.previousX = e.touches[0].clientX;
 
 	if(app.player.spriteAnimation >= 5)
 	{
@@ -134,6 +158,10 @@ function touchDownHandler(e)
 	app.ctx.clearRect(0, 0, 1920, 1080 );
 
 }
+
+
+                                                                                             
+
 
 Player.prototype.CheckCollision = function(e)
 {
@@ -278,7 +306,10 @@ Player.prototype.Jump = function(e)
 			//velocityY = 0;
 		
 }
+Player.prototype.MoveRight = function(e)
+{
 
+}
 
 Player.prototype.Collided = function(e)
 {

@@ -26,8 +26,10 @@ function main()
     app.backGround = new BackGround();
    	app.game = new Game();
    	app.menu = new MainMenu();
+   	app.sound = new Sound();
 	app.player = new Player();
 	app.goal = new Goal();
+	app.timer = new Timer();
 	app.game.Init();
 	app.game.Update();
 }

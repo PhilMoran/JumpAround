@@ -12,11 +12,15 @@ function MainMenu()
 	this.x = window.innerWidth/3;
 	this.y = window.innerHeight/4.5;
 	//this.theElement = document.getElementById("theElement");
+	this.mainTheme = new Sound('sounds/JumpAround.wav',100,true);
+	this.backgroundMusic = new Sound('sounds/JaxJones.wav',100,true);
 
 
 };
 
 MainMenu.prototype.Init = function(){
+	   
+	app.menu.mainTheme.start();
 	
 }
 MainMenu.prototype.Draw = function() {
@@ -49,25 +53,33 @@ MainMenu.prototype.TextJump = function(e)
 
 function menuTapControls(event) {
    //handle tap or click.
+
    if(app.menu.gameState ==0)
    {
+   	
 	if(event.type == 'touchstart')
 	{
 		if(event.touches[0].clientX >= window.innerWidth /11 && event.touches[0].clientX <= window.innerWidth /11+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
+			app.menu.mainTheme.stop();
+			app.menu.backgroundMusic.start();
 			app.menu.gameState = 1;
+			
 		}
 		if(event.touches[0].clientX >= window.innerWidth /3.3 && event.touches[0].clientX <= window.innerWidth /3.3+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
 			app.menu.gameState = 2;
+			app.menu.mainTheme.stop();
 		}
 		if(event.touches[0].clientX >= window.innerWidth /1.9 && event.touches[0].clientX <= window.innerWidth /1.9+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
 			app.menu.gameState = 3;
+			app.menu.mainTheme.stop();
 		}
 		if(event.touches[0].clientX >= window.innerWidth /1.32 && event.touches[0].clientX <= window.innerWidth /1.32+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
 			app.menu.gameState = 4;
+			app.menu.mainTheme.stop();
 		}
 	}
 }

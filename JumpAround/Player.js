@@ -21,10 +21,12 @@ function Player()
 	this.direction =0;
 	this.spriteAnimation = 0;
 	this.rightAnimation =0;
-	this.collectSound = new Audio();
 	this.previousX =0;
 	this.previousY =0;
-
+	//this.collectSound = new Sound('sounds/sound.mp3',100,true);
+	this.jumpEffect = new Sound('sounds/Jump.wav',100,true);
+	this.coinEffect = new Sound('sounds/CoinSound.wav',100,true);
+	
 };
 
 Player.prototype.Draw = function() {
@@ -33,10 +35,12 @@ Player.prototype.Draw = function() {
 		app.ctx = app.canvas.getContext("2d");
 		this.playerSprite.src = 'Images/Running.png';
 		app.ctx.drawImage(this.playerSprite,this.rightAnimation,this.direction,this.width/6,this.height/2,this.x,this.y,this.playerWidth,this.playerheight);
-		
+		app.timer.TimeControl();
 		
 	}
 };
+Player.prototype.LoadSounds = function() {
+	}
 function keyDownHandler(e)
 {
 	console.log(app.player.y);
@@ -100,8 +104,8 @@ function touchDownHandler(e)
 	
 		 if(app.player.alive === true&&app.player.jumping ==true)
 		{
-				
 			app.player.jump = true;
+			app.player.jumpEffect.start();
 		}    
 	}
 	///app.player.previousY = e.touches[0].clientY; 
@@ -165,8 +169,7 @@ function touchDownHandler(e)
 
 Player.prototype.CheckCollision = function(e)
 {
-	this.collectSound.src ='sound.mp3';
-
+	
 	//console.log((new Audio()).canPlayType("audio/ogg; codecs=vorbis"));
 
 	if((this.x < e.x1 + e.width) && 
@@ -177,7 +180,7 @@ Player.prototype.CheckCollision = function(e)
 		e.x1 = -100;
 		e.y1 = -100;
 		this.stars++;
-		this.collectSound.play();
+		this.coinEffect.start();
 	}
 	if((this.x < e.x2 + e.width) && 
 		(this.x + this.width/24 > e.x2) && 
@@ -187,7 +190,7 @@ Player.prototype.CheckCollision = function(e)
 		e.x2 = -100;
 		e.y2 = -100;
 		this.stars++;
-		this.collectSound.play();
+		this.coinEffect.start();
 	}
 	if((this.x < e.x3 + e.width) && 
 		(this.x + this.width/24 > e.x3) && 
@@ -197,12 +200,14 @@ Player.prototype.CheckCollision = function(e)
 		e.x3 = -100;
 		e.y3 = -100;
 		this.stars++;
-		this.collectSound.play();
+		this.coinEffect.start();
 	}
-		if(this.stars == 3)
-	{
+		if(this.stars == 3)			
+	{	
+		app.timer.Stop();
 		app.player.Collided(e);
 		this.alive = false;
+
 	}
 
 	if(this.delay === 100)

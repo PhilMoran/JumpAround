@@ -55,11 +55,23 @@ Goal.prototype.Animate = function()
 
 Goal.prototype.Reset = function()
 {
-	this.x1 = 1300;
-	this.y1 = 300;
-	this.x2 = 700;
-	this.y2 = 50;
-	this.x3 = 80;
-	this.y3 =400;
+	if(app.menu.gameState == 1)//entersGame
+	{
+		this.x1 = 1300;
+		this.y1 = 300;
+		this.x2 = 700;
+		this.y2 = 50;
+		this.x3 = 80;
+		this.y3 =400;
+	}
+	if(app.menu.gameState == 3)//entersGame
+	{
+		this.x1 = 1300;
+		this.y1 = 700;
+		this.x2 = 700;
+		this.y2 = 50;
+		this.x3 = 80;
+		this.y3 =400;
+	}
 	this.alive = true; 
 }

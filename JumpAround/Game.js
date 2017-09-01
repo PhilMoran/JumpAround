@@ -27,7 +27,6 @@ Game.prototype.Update = function()
 	app.goal.Draw();
 	app.timer.Draw();
 	app.goal.Animate();
-	//app.player.Jump();
 	app.player.CheckCollision(app.goal);
 	app.player.JumpingDetection(app.gameObjects);
 	app.player.Jump(app.gameObjects);
@@ -36,15 +35,23 @@ Game.prototype.Update = function()
 	if(app.menu.gameState == 3)//entersGame
 	{
 	app.backGround.Draw();
+
 	app.player.Draw();
 	app.gameObjects.Draw();
 	app.goal.Draw();
+	app.tutorial.Draw();
 	//app.timer.Draw();
 	app.goal.Animate();
-	//app.player.Jump();
+	if(app.player.stars >= 1)
+	{
+		app.player.Jump(app.gameObjects);
+	}
+	if(app.player.stars == 3)
+	{
+	app.timer.Draw();
+	}
 	app.player.CheckCollision(app.goal);
-	//app.player.JumpingDetection(app.gameObjects);
-	//app.player.Jump(app.gameObjects);
+	app.player.JumpingDetection(app.gameObjects);
 
 	}
 	

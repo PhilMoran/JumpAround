@@ -39,8 +39,6 @@ Player.prototype.Draw = function() {
 		
 	}
 };
-Player.prototype.LoadSounds = function() {
-	}
 function keyDownHandler(e)
 {
 	console.log(app.player.y);

@@ -7,34 +7,41 @@ function Timer()
     this.miliseconds = 0; 
     this.seconds = 0; 
     this.minutes = 0;
-    this.milisecondsL1 = 10; 
-    this.secondsL1 = 20; 
-    this.minutesL1 = 0;
+    this.milisecondsL1 = 99; 
+    this.secondsL1 = 99; 
+    this.minutesL1 = 99;
     this.levelEnd = false;
     this.t;
     this.stopWatch = new Image();
     this.grey = new Image();
     this.nextButton = new Image();
+    this.learnTime = new Image();
     this.retryButton = new Image();
     this.exitButton = new Image();
     this.level = 0;
 }
 Timer.prototype.Draw = function()
 {
+    this.grey.src = 'Images/GrayedOut.png';
+    this.nextButton.src = 'images/nextButton.png';
+    this.retryButton.src = 'images/retryButton.png';
+    this.exitButton.src = 'images/exit.png';
+    this.learnTime.src = "Images/TimeTut.png"
     //app.ctx.font="20px Georgia";
     app.ctx = app.canvas.getContext("2d");
+
     this.stopWatch.src = 'images/cloud.png';
+    if(app.menu.gameState == 1 )
+    {
     app.ctx.drawImage(this.stopWatch,window.innerWidth/40,window.innerHeight/40,300,150);
     app.ctx.font="40px Impact";
     app.ctx.fillStyle=rgb(120,120,120);
     app.ctx.fillText('Timer:'+ this.minutes + ":" + this.seconds + ":" + this.miliseconds,window.innerWidth/18,window.innerHeight/7);
+  
     if(this.levelEnd == true)
     {
         app.ctx.fillStyle=rgb(255,120,120);
-        this.grey.src = 'Images/GrayedOut.png';
-        this.nextButton.src = 'images/nextButton.png';
-        this.retryButton.src = 'images/retryButton.png';
-        this.exitButton.src = 'images/exit.png';
+       
         app.ctx.drawImage(this.grey,0,0);
         app.ctx.fillText( this.minutes + ":" + this.seconds + ":" + this.miliseconds,window.innerWidth/2,window.innerHeight/2.5);
         app.ctx.fillText( this.minutesL1 + ":" + this.secondsL1 + ":" + this.milisecondsL1,window.innerWidth/2,window.innerHeight/2);
@@ -43,6 +50,13 @@ Timer.prototype.Draw = function()
         app.ctx.drawImage(this.exitButton,window.innerWidth/2,window.innerHeight/1.9,200,100);
 
         
+    }
+    }
+    if(app.menu.gameState == 3 && app.player.stars == 3)
+    {
+         app.ctx.drawImage(this.grey,0,0);
+         app.ctx.drawImage(this.exitButton,window.innerWidth/3,window.innerHeight/15,200,100);
+         app.ctx.drawImage(this.learnTime,400,window.innerHeight/80,800,800);
     }
 
 }
@@ -72,6 +86,8 @@ Timer.prototype.Stop = function() {
     this.levelEnd = true;
 }
 Timer.prototype.BestTime = function(){
+    if(app.menu.gameState == 1)
+    {
     if(this.minutes < this.minutesL1)
     {
         this.minutesL1 = this.minutes;
@@ -96,6 +112,7 @@ Timer.prototype.BestTime = function(){
             }
         }
     }
+    }
 }
 function endTouch(e)
 {
@@ -112,27 +129,43 @@ function endTouch(e)
         }
         if(event.touches[0].clientX >= window.innerWidth /3 && event.touches[0].clientX <= window.innerWidth /3+200 &&event.touches[0].clientY >= window.innerHeight /1.9 && event.touches[0].clientY <= window.innerHeight /1.9 + 100 )
         {//retry
+            
+            app.menu.gameState = 1;
             app.goal.Reset();
             app.player.Reset();
             app.timer.Clear();
-            app.menu.gameState = 1;
             app.timer.levelEnd = false;
 
         }
         if(event.touches[0].clientX >= window.innerWidth /2 && event.touches[0].clientX <= window.innerWidth /2+200 &&event.touches[0].clientY >= window.innerHeight /1.9 && event.touches[0].clientY <= window.innerHeight /1.9 + 100 )
         {//exit
+           
+            app.menu.gameState = 0;
             app.goal.Reset();
             app.player.Reset();
             app.timer.Clear();
-            app.menu.gameState = 0;
             app.timer.levelEnd = false
             app.menu.backgroundMusic.stop();
         }
+
     }
+    }
+      if(app.menu.gameState == 3 && app.player.stars == 3)
+    {
+         if(event.touches[0].clientX >= window.innerWidth /3 && event.touches[0].clientX <= window.innerWidth /3+200 &&event.touches[0].clientY >= window.innerHeight /15 && event.touches[0].clientY <= window.innerHeight /15 + 100 )
+        {
+           
+            app.timer.levelEnd = false
+            app.menu.gameState = 0;
+            app.goal.Reset();
+            app.player.Reset();
+            app.timer.Clear();
+        }
     }
 }
 /* Clear button */
 Timer.prototype.Clear = function() {
     this.miliseconds = 0; 
     this.seconds = 0;
+    this.minutes =0;
 }

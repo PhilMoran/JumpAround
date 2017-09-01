@@ -64,11 +64,15 @@ function menuTapControls(event) {
 			//app.menu.mainTheme.stop();
 			//app.menu.backgroundMusic.start();
 			app.menu.gameState = 1;
+			app.goal.Reset();
+            app.player.Reset();
+            app.timer.Clear();
 			
 		}
 		if(event.touches[0].clientX >= window.innerWidth /3.9 && event.touches[0].clientX <= window.innerWidth /3.9+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
 			app.menu.gameState = 3;
+			app.goal.Reset();
 			app.menu.mainTheme.stop();
 		}
 		if(event.touches[0].clientX >= window.innerWidth /2.2 && event.touches[0].clientX <= window.innerWidth /2.2+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )

@@ -26,6 +26,7 @@ function main()
 
     app.gameObjects = new GameObjects();
     app.backGround = new BackGround();
+    app.tutorial = new Tutorial();
    	app.game = new Game();
    	app.menu = new MainMenu();
    	app.sound = new Sound();

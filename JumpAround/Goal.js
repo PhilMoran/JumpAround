@@ -55,7 +55,11 @@ Goal.prototype.Animate = function()
 
 Goal.prototype.Reset = function()
 {
-	this.x1 = Math.random() * window.innerWidth;
-	this.y1 = Math.random() * window.innerHeight; 
+	this.x1 = 1300;
+	this.y1 = 300;
+	this.x2 = 700;
+	this.y2 = 50;
+	this.x3 = 80;
+	this.y3 =400;
 	this.alive = true; 
 }

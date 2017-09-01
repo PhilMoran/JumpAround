@@ -10,14 +10,16 @@ function main()
 	document.addEventListener("touchstart", menuTapControls, false);
 	document.addEventListener('touchmove', touchDownHandler, false);
 	document.addEventListener("touchstart", touchDownHandler, false);
+	document.addEventListener("touchstart", endTouch, false);
+
 	//document.addEventListener("touchend", touchDownHandler, false);
 
 	 //Creates a new canvas element 
     app.canvas = document.createElement("canvas");
     //Adds the canvas element to the document 
     document.body.appendChild(app.canvas);
-    app.canvas.width = window.innerWidth;
-    app.canvas.height = window.innerHeight;
+    app.canvas.width = 1362;
+    app.canvas.height = 935;
     
 
     app.ctx = app.canvas.getContext("2d");

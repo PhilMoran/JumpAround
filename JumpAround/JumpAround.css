@@ -1,3 +1,16 @@
 body {
 	background-color:white; 
+
+	@font-face { 
+   font-family: "AlphaSmoke"; 
+    /* IE */
+    src: url('./fonts/AlphaSmoke.eot');
+    /* IE */
+
+    /* Not IE */
+    src: local("AlphaSmoke"), url('./fonts/AlphaSmoke.ttf');
+    format("truetype");
+    /* Not IE */
+}
+
 }

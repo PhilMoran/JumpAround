@@ -33,12 +33,12 @@ MainMenu.prototype.Draw = function() {
 	this.multiplayerButton.src = 'images/multiplayerButton.png';
 	this.exitButton.src = 'images/exitButton.png'
 
-	app.ctx.drawImage(this.menuBack,0,0,window.innerWidth,window.innerHeight);
+	app.ctx.drawImage(this.menuBack,0,0,1362,935);
 	app.ctx.drawImage(this.jumpImage,this.x,this.y,500,150);
 	app.ctx.drawImage(this.startButton,window.innerWidth/11,window.innerHeight/1.3,200,100);
-	app.ctx.drawImage(this.tutorialButton,window.innerWidth/3.3,window.innerHeight/1.3,200,100);
-	app.ctx.drawImage(this.multiplayerButton,window.innerWidth/1.9,window.innerHeight/1.3,200,100);
-	app.ctx.drawImage(this.exitButton,window.innerWidth/1.32,window.innerHeight/1.3,200,100);
+	app.ctx.drawImage(this.tutorialButton,window.innerWidth/3.9,window.innerHeight/1.3,200,100);
+	app.ctx.drawImage(this.multiplayerButton,window.innerWidth/2.2,window.innerHeight/1.3,200,100);
+	app.ctx.drawImage(this.exitButton,window.innerWidth/1.5,window.innerHeight/1.3,200,100);
 };
 MainMenu.prototype.TextJump = function(e)
 {	
@@ -61,24 +61,24 @@ function menuTapControls(event) {
 	{
 		if(event.touches[0].clientX >= window.innerWidth /11 && event.touches[0].clientX <= window.innerWidth /11+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
-			app.menu.mainTheme.stop();
-			app.menu.backgroundMusic.start();
+			//app.menu.mainTheme.stop();
+			//app.menu.backgroundMusic.start();
 			app.menu.gameState = 1;
 			
 		}
-		if(event.touches[0].clientX >= window.innerWidth /3.3 && event.touches[0].clientX <= window.innerWidth /3.3+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
-		{
-			app.menu.gameState = 2;
-			app.menu.mainTheme.stop();
-		}
-		if(event.touches[0].clientX >= window.innerWidth /1.9 && event.touches[0].clientX <= window.innerWidth /1.9+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
+		if(event.touches[0].clientX >= window.innerWidth /3.9 && event.touches[0].clientX <= window.innerWidth /3.9+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
 			app.menu.gameState = 3;
 			app.menu.mainTheme.stop();
 		}
-		if(event.touches[0].clientX >= window.innerWidth /1.32 && event.touches[0].clientX <= window.innerWidth /1.32+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
+		if(event.touches[0].clientX >= window.innerWidth /2.2 && event.touches[0].clientX <= window.innerWidth /2.2+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
 		{
 			app.menu.gameState = 4;
+			app.menu.mainTheme.stop();
+		}
+		if(event.touches[0].clientX >= window.innerWidth /1.5 && event.touches[0].clientX <= window.innerWidth /1.5+200 &&event.touches[0].clientY >= window.innerHeight /1.3 && event.touches[0].clientY <= window.innerHeight /1.3 + 100 )
+		{
+			app.menu.gameState = 5;
 			app.menu.mainTheme.stop();
 		}
 	}

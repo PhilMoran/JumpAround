@@ -320,18 +320,20 @@ Player.prototype.Collided = function(e)
 {
 	e.alive = false; 
 	app.ctx.save(); 
-	app.ctx.fillStyle=rgb(0,0,0);
-	app.ctx.font = 'bold 72pt hemi head bd it';
+	app.ctx.fillStyle=rgb(120,255,120);
+	app.ctx.font = 'bold 50pt Impact';
 	app.ctx.TextBaseline = "top";
-	app.ctx.fillText("Your Time:", 400, 400);
+	app.ctx.fillText("Your Time:", window.innerWidth/4, window.innerHeight/2.5);
+	app.ctx.fillText("Best Time: ",window.innerWidth/4,window.innerHeight/2);
 	app.ctx.restore();
 }
 
 Player.prototype.Reset = function()
 {
 
-	this.x = Math.random() * window.innerWidth;
-	this.y = Math.random() * window.innerHeight;
+	this.x = window.innerWidth/2;
+	this.y = window.innerHeight-240;
+	this.stars = 0;
 	this.alive = true;
 	app.ctx.fillText("", 45, 45);
 };
